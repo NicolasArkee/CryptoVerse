@@ -4,9 +4,10 @@ import { Env } from '@/libs/Env';
 import * as schema from '@/models/Schema';
 
 export const createDbConnection = () => {
+  const dbUrl = Env.DATABASE_URL ?? '';
   const pool = new Pool({
-    connectionString: Env.DATABASE_URL,
-    max: Env.DATABASE_URL.includes('localhost') || Env.DATABASE_URL.includes('127.0.0.1')
+    connectionString: dbUrl,
+    max: dbUrl.includes('localhost') || dbUrl.includes('127.0.0.1')
       ? 1
       : undefined,
   });

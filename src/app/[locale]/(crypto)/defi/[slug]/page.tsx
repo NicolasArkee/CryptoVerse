@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { buildMetadata } from '@/utils/Seo';
 import { getProtocol, formatTVL } from '@/libs/DefiLlama';
 import { TVLChart } from '@/components/crypto/TVLChart';
+import { Breadcrumbs } from '@/components/crypto/Breadcrumbs';
 
 interface DefiDetailPageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -38,6 +39,11 @@ export default async function DefiDetailPage(props: DefiDetailPageProps) {
 
   return (
     <div className="mx-auto max-w-[80rem] px-6 py-12">
+      <Breadcrumbs items={[
+        { label: 'DeFi', href: '/defi' },
+        { label: protocol.name },
+      ]} />
+
       {/* Header */}
       <div className="flex items-center gap-4 mb-8">
         {/* eslint-disable-next-line @next/next/no-img-element */}

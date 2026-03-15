@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl';
 import { Link } from '@/libs/I18nNavigation';
 import { LocaleSwitcher } from './LocaleSwitcher';
+import { MobileMenu } from '@/components/crypto/MobileMenu';
 
 export function Navbar() {
   const t = useTranslations('Navigation');
@@ -32,6 +33,7 @@ export function Navbar() {
         </div>
         <div className="flex items-center gap-4">
           <LocaleSwitcher />
+          <MobileMenu />
         </div>
       </div>
       {/* Secondary nav */}

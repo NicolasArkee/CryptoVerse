@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { buildMetadata } from '@/utils/Seo';
 import { getExchange, formatCurrency, getLocaleForIntl } from '@/libs/CoinGecko';
+import { Breadcrumbs } from '@/components/crypto/Breadcrumbs';
 
 interface ExchangeDetailPageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -57,6 +58,11 @@ export default async function ExchangeDetailPage(props: ExchangeDetailPageProps)
 
   return (
     <div className="mx-auto max-w-[80rem] px-6 py-12">
+      <Breadcrumbs items={[
+        { label: 'Exchanges', href: '/exchanges' },
+        { label: exchange.name },
+      ]} />
+
       {/* Header */}
       <div className="flex items-center gap-4 mb-8">
         {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -13,8 +13,9 @@ import {
 } from '@/libs/CoinGecko';
 import { Link } from '@/libs/I18nNavigation';
 import { PriceChange } from '@/components/crypto/PriceChange';
-import { PriceChart } from '@/components/crypto/PriceChart';
+import { InteractiveChart } from '@/components/crypto/InteractiveChart';
 import { CategoryBadge } from '@/components/crypto/CategoryBadge';
+import { Breadcrumbs } from '@/components/crypto/Breadcrumbs';
 import { SupplyBar } from '@/components/crypto/SupplyBar';
 import { CommunityStats } from '@/components/crypto/CommunityStats';
 import { TradingPairRow } from '@/components/crypto/TradingPairRow';
@@ -70,6 +71,11 @@ export default async function TokenDetailPage(props: TokenDetailPageProps) {
 
   return (
     <div className="mx-auto max-w-[80rem] px-6 py-12">
+      <Breadcrumbs items={[
+        { label: 'Tokens', href: '/tokens' },
+        { label: coin.name },
+      ]} />
+
       {/* Header */}
       <div className="flex flex-col md:flex-row items-start gap-6 mb-10">
         <div className="flex items-center gap-4">
@@ -164,6 +170,14 @@ export default async function TokenDetailPage(props: TokenDetailPageProps) {
             {formatCurrency(md.low_24h.usd || 0, 'USD', intlLocale)}
           </div>
         </div>
+        {md.fully_diluted_valuation?.usd != null && md.fully_diluted_valuation.usd > 0 && (
+          <div className="bg-dark border border-border p-4">
+            <div className="text-[0.72rem] text-muted mb-1">{t('fdv')}</div>
+            <div className="text-base font-semibold text-white tabular-nums">
+              {formatCurrency(md.fully_diluted_valuation.usd, 'USD', intlLocale)}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Supply Distribution */}
@@ -184,7 +198,7 @@ export default async function TokenDetailPage(props: TokenDetailPageProps) {
           &#9654; {t('price_chart')}
         </div>
         <div className="bg-dark border border-border p-4">
-          <PriceChart data={chartData.prices} />
+          <InteractiveChart coinId={slug} initialData={chartData.prices} initialDays={30} />
         </div>
       </section>
 

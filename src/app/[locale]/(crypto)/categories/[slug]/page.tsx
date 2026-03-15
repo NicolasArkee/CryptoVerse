@@ -5,6 +5,7 @@ import { buildMetadata } from '@/utils/Seo';
 import { getCategory, getCoinsByCategory, formatCurrency, getLocaleForIntl } from '@/libs/CoinGecko';
 import { CoinGrid } from '@/components/crypto/CoinGrid';
 import { PriceChange } from '@/components/crypto/PriceChange';
+import { Breadcrumbs } from '@/components/crypto/Breadcrumbs';
 
 interface CategoryDetailPageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -46,6 +47,11 @@ export default async function CategoryDetailPage(props: CategoryDetailPageProps)
 
   return (
     <div className="mx-auto max-w-[80rem] px-6 py-12">
+      <Breadcrumbs items={[
+        { label: 'Categories', href: '/categories' },
+        { label: category!.name },
+      ]} />
+
       {/* Header */}
       <div className="mb-8">
         <h1 className="font-pixel text-xl md:text-2xl text-white mb-3" style={{ textShadow: '0 0 20px rgba(0,211,149,0.5)' }}>

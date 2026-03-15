@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { buildMetadata } from '@/utils/Seo';
-import { getChains } from '@/libs/DefiLlama';
-import { ChainCard } from '@/components/crypto/ChainCard';
+import { getChains, getProtocols } from '@/libs/DefiLlama';
+import { BlockchainsTable } from '@/components/crypto/BlockchainsTable';
 
 interface BlockchainsPageProps {
   params: Promise<{ locale: string }>;
@@ -19,11 +19,33 @@ export default async function BlockchainsPage(props: BlockchainsPageProps) {
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: 'BlockchainsPage' });
 
-  let chains: Awaited<ReturnType<typeof getChains>> = [];
+  let chainRows: { name: string; slug: string; tvl: number; tokenSymbol: string; protocolCount: number }[] = [];
+
   try {
-    chains = (await getChains())
+    const [chains, protocols] = await Promise.all([
+      getChains(),
+      getProtocols(),
+    ]);
+
+    // Count protocols per chain
+    const protocolCounts: Record<string, number> = {};
+    for (const p of protocols) {
+      if (p.tvl <= 0) continue;
+      for (const chain of p.chains) {
+        protocolCounts[chain] = (protocolCounts[chain] || 0) + 1;
+      }
+    }
+
+    chainRows = chains
       .filter(c => c.tvl > 0)
-      .sort((a, b) => b.tvl - a.tvl);
+      .sort((a, b) => b.tvl - a.tvl)
+      .map(c => ({
+        name: c.name,
+        slug: c.name.toLowerCase().replace(/\s+/g, '-'),
+        tvl: c.tvl,
+        tokenSymbol: c.tokenSymbol || '',
+        protocolCount: protocolCounts[c.name] || 0,
+      }));
   } catch {
     // handle
   }
@@ -35,11 +57,7 @@ export default async function BlockchainsPage(props: BlockchainsPageProps) {
       </h1>
       <p className="text-subtle text-sm mb-10">{t('description')}</p>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {chains.slice(0, 40).map(chain => (
-          <ChainCard key={chain.name} name={chain.name} tvl={chain.tvl} tokenSymbol={chain.tokenSymbol || ''} />
-        ))}
-      </div>
+      <BlockchainsTable chains={chainRows} />
     </div>
   );
 }

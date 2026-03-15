@@ -74,6 +74,7 @@ export interface CoinDetail {
     circulating_supply: number;
     total_supply: number | null;
     max_supply: number | null;
+    fully_diluted_valuation: Record<string, number>;
     sparkline_7d?: { price: number[] };
   };
   community_data: {

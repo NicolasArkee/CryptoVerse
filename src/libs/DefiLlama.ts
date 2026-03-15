@@ -105,6 +105,38 @@ export async function getStablecoins(): Promise<{ peggedAssets: Stablecoin[] }> 
   return res.json() as Promise<{ peggedAssets: Stablecoin[] }>;
 }
 
+export interface ChainHistoryEntry {
+  date: number;
+  tvl: number;
+}
+
+export interface ChainFees {
+  total24h: number | null;
+  total7d: number | null;
+  total30d: number | null;
+  totalAllTime: number | null;
+}
+
+export async function getChainHistory(chain: string): Promise<ChainHistoryEntry[]> {
+  const res = await fetch(`${BASE_URL}/v2/historicalChainTvl/${chain}`, {
+    next: { revalidate: 3600 },
+  });
+  if (!res.ok) return [];
+  return res.json() as Promise<ChainHistoryEntry[]>;
+}
+
+export async function getChainFees(chain: string): Promise<ChainFees | null> {
+  try {
+    const res = await fetch(`${BASE_URL}/overview/fees/${chain}?excludeTotalDataChart=true&excludeTotalDataChartBreakdown=true`, {
+      next: { revalidate: 3600 },
+    });
+    if (!res.ok) return null;
+    return res.json() as Promise<ChainFees>;
+  } catch {
+    return null;
+  }
+}
+
 // ─── Formatting ──────────────────────────────────
 
 export function formatTVL(value: number): string {

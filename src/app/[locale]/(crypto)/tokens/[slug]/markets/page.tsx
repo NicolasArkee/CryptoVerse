@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { buildMetadata } from '@/utils/Seo';
 import { getCoin, getCoinTickers } from '@/libs/CoinGecko';
 import { TradingPairRow } from '@/components/crypto/TradingPairRow';
+import { Breadcrumbs } from '@/components/crypto/Breadcrumbs';
 
 interface TokenMarketsPageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -46,6 +47,12 @@ export default async function TokenMarketsPage(props: TokenMarketsPageProps) {
 
   return (
     <div className="mx-auto max-w-[80rem] px-6 py-12">
+      <Breadcrumbs items={[
+        { label: 'Tokens', href: '/tokens' },
+        { label: coin.name, href: `/tokens/${slug}` },
+        { label: 'Markets' },
+      ]} />
+
       <div className="flex items-center gap-3 mb-8">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={coin.image.small} alt={coin.name} width={32} height={32} />

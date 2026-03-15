@@ -5,14 +5,21 @@ import { buildMetadata } from '@/utils/Seo';
 import {
   getCoin,
   getCoinMarketChart,
+  getCoinTickers,
   formatCurrency,
   formatPercent,
   getLocaleForIntl,
   getLocalizedDescription,
 } from '@/libs/CoinGecko';
+import { Link } from '@/libs/I18nNavigation';
 import { PriceChange } from '@/components/crypto/PriceChange';
 import { PriceChart } from '@/components/crypto/PriceChart';
 import { CategoryBadge } from '@/components/crypto/CategoryBadge';
+import { SupplyBar } from '@/components/crypto/SupplyBar';
+import { CommunityStats } from '@/components/crypto/CommunityStats';
+import { TradingPairRow } from '@/components/crypto/TradingPairRow';
+import { PriceConverter } from '@/components/crypto/PriceConverter';
+import { ROICalculator } from '@/components/crypto/ROICalculator';
 
 interface TokenDetailPageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -44,11 +51,13 @@ export default async function TokenDetailPage(props: TokenDetailPageProps) {
 
   let coin: Awaited<ReturnType<typeof getCoin>>;
   let chartData: Awaited<ReturnType<typeof getCoinMarketChart>>;
+  let tickers: Awaited<ReturnType<typeof getCoinTickers>> | null = null;
 
   try {
-    [coin, chartData] = await Promise.all([
+    [coin, chartData, tickers] = await Promise.all([
       getCoin(slug),
       getCoinMarketChart(slug, 30),
+      getCoinTickers(slug).catch(() => null),
     ]);
   } catch {
     notFound();
@@ -56,9 +65,8 @@ export default async function TokenDetailPage(props: TokenDetailPageProps) {
 
   const md = coin.market_data;
   const description = getLocalizedDescription(coin.description, locale);
-
-  // Strip HTML tags from description
   const cleanDescription = description.replace(/<[^>]*>/g, '');
+  const topTickers = tickers?.tickers?.slice(0, 10) || [];
 
   return (
     <div className="mx-auto max-w-[80rem] px-6 py-12">
@@ -158,6 +166,18 @@ export default async function TokenDetailPage(props: TokenDetailPageProps) {
         </div>
       </div>
 
+      {/* Supply Distribution */}
+      {md.circulating_supply > 0 && (
+        <section className="mb-10">
+          <div className="font-pixel text-[0.42rem] text-green-bright tracking-[0.12em] mb-4">
+            &#9654; {t('supply')}
+          </div>
+          <div className="bg-dark border border-border p-4 max-w-xl">
+            <SupplyBar circulating={md.circulating_supply} total={md.total_supply} max={md.max_supply} locale={intlLocale} />
+          </div>
+        </section>
+      )}
+
       {/* Price Chart */}
       <section className="mb-10">
         <div className="font-pixel text-[0.42rem] text-green-bright tracking-[0.12em] mb-4">
@@ -167,6 +187,82 @@ export default async function TokenDetailPage(props: TokenDetailPageProps) {
           <PriceChart data={chartData.prices} />
         </div>
       </section>
+
+      {/* Community & Social */}
+      <CommunityStats
+        twitterFollowers={coin.community_data?.twitter_followers}
+        redditSubscribers={coin.community_data?.reddit_subscribers}
+        githubStars={coin.developer_data?.stars}
+        githubForks={coin.developer_data?.forks}
+      />
+      {(coin.community_data?.twitter_followers || coin.community_data?.reddit_subscribers || coin.developer_data?.stars || coin.developer_data?.forks) && (
+        <div className="font-pixel text-[0.42rem] text-green-bright tracking-[0.12em] mb-4 -mt-6">
+          &#9654; {t('community')}
+        </div>
+      )}
+
+      {/* Trading Pairs */}
+      {topTickers.length > 0 && (
+        <section className="mb-10">
+          <div className="font-pixel text-[0.42rem] text-green-bright tracking-[0.12em] mb-4">
+            &#9654; {t('trading_pairs')}
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border text-muted text-[0.72rem] uppercase tracking-wider">
+                  <th className="text-left py-2 px-2">Exchange</th>
+                  <th className="text-left py-2 px-2">Pair</th>
+                  <th className="text-right py-2 px-2">Price</th>
+                  <th className="text-right py-2 px-2">Volume</th>
+                  <th className="text-right py-2 px-2">Trust</th>
+                  <th className="text-right py-2 px-2"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {topTickers.map((ticker, i) => (
+                  <TradingPairRow key={i} ticker={ticker} />
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <Link
+            href={`/tokens/${slug}/markets`}
+            className="inline-block mt-3 text-green text-sm hover:underline"
+          >
+            {t('view_all_markets')} &rarr;
+          </Link>
+        </section>
+      )}
+
+      {/* Price Converter */}
+      {(md.current_price?.usd ?? 0) > 0 && (
+        <section className="mb-10">
+          <div className="font-pixel text-[0.42rem] text-green-bright tracking-[0.12em] mb-4">
+            &#9654; {t('converter')}
+          </div>
+          <div className="bg-dark border border-border p-4 max-w-xl">
+            <PriceConverter symbol={coin.symbol} priceUsd={md.current_price.usd!} />
+          </div>
+        </section>
+      )}
+
+      {/* ROI Calculator */}
+      {(md.atl?.usd ?? 0) > 0 && (md.current_price?.usd ?? 0) > 0 && (
+        <section className="mb-10">
+          <div className="font-pixel text-[0.42rem] text-green-bright tracking-[0.12em] mb-4">
+            &#9654; {t('roi_calculator')}
+          </div>
+          <div className="bg-dark border border-border p-4 max-w-xl">
+            <ROICalculator
+              currentPrice={md.current_price.usd!}
+              atl={md.atl.usd!}
+              atlDate={md.atl_date?.usd || ''}
+              symbol={coin.symbol}
+            />
+          </div>
+        </section>
+      )}
 
       {/* Description */}
       {cleanDescription && (
@@ -188,34 +284,17 @@ export default async function TokenDetailPage(props: TokenDetailPageProps) {
           </div>
           <div className="flex flex-wrap gap-3">
             {coin.links.homepage.filter(Boolean).map((url, i) => (
-              <a
-                key={i}
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="border border-border hover:border-green/50 text-subtle hover:text-white px-4 py-2 text-sm transition-colors"
-              >
+              <a key={i} href={url} target="_blank" rel="noopener noreferrer" className="border border-border hover:border-green/50 text-subtle hover:text-white px-4 py-2 text-sm transition-colors">
                 {t('website')} &rarr;
               </a>
             ))}
             {coin.links.whitepaper && (
-              <a
-                href={coin.links.whitepaper}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="border border-border hover:border-gold/50 text-subtle hover:text-white px-4 py-2 text-sm transition-colors"
-              >
+              <a href={coin.links.whitepaper} target="_blank" rel="noopener noreferrer" className="border border-border hover:border-gold/50 text-subtle hover:text-white px-4 py-2 text-sm transition-colors">
                 {t('whitepaper')} &rarr;
               </a>
             )}
             {coin.links.blockchain_site.filter(Boolean).slice(0, 3).map((url, i) => (
-              <a
-                key={i}
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="border border-border hover:border-border-light text-subtle hover:text-white px-4 py-2 text-sm transition-colors"
-              >
+              <a key={i} href={url} target="_blank" rel="noopener noreferrer" className="border border-border hover:border-border-light text-subtle hover:text-white px-4 py-2 text-sm transition-colors">
                 {t('explorer')} &rarr;
               </a>
             ))}
@@ -231,11 +310,7 @@ export default async function TokenDetailPage(props: TokenDetailPageProps) {
           </div>
           <div className="flex flex-wrap gap-2">
             {coin.categories.filter(Boolean).map(cat => (
-              <CategoryBadge
-                key={cat}
-                name={cat}
-                slug={cat.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}
-              />
+              <CategoryBadge key={cat} name={cat} slug={cat.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')} />
             ))}
           </div>
         </section>

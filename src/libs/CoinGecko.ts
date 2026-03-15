@@ -189,6 +189,47 @@ export interface SearchResult {
   categories: { id: number; name: string }[];
 }
 
+export interface GlobalDeFiData {
+  data: {
+    defi_market_cap: string;
+    eth_market_cap: string;
+    defi_to_eth_ratio: string;
+    trading_volume_24h: string;
+    defi_dominance: string;
+    top_coin_name: string;
+    top_coin_defi_dominance: number;
+  };
+}
+
+export interface CoinTicker {
+  base: string;
+  target: string;
+  market: { name: string; identifier: string; has_trading_incentive: boolean };
+  last: number;
+  volume: number;
+  converted_last: { usd: number; btc: number; eth: number };
+  converted_volume: { usd: number; btc: number; eth: number };
+  trust_score: string | null;
+  bid_ask_spread_percentage: number | null;
+  timestamp: string;
+  last_traded_at: string;
+  last_fetch_at: string;
+  is_anomaly: boolean;
+  is_stale: boolean;
+  trade_url: string | null;
+  coin_id: string;
+  target_coin_id?: string;
+}
+
+export interface AssetPlatform {
+  id: string;
+  chain_identifier: number | null;
+  name: string;
+  shortname: string;
+  native_coin_id: string;
+  image: { thumb: string; small: string; large: string } | null;
+}
+
 // ─── Fetch helpers ───────────────────────────────
 
 async function fetchCoinGecko<T>(
@@ -327,6 +368,43 @@ export async function getCoinsByCategory(
   return fetchCoinGecko<CoinMarket[]>(
     `/coins/markets?vs_currency=${currency}&category=${categoryId}&order=market_cap_desc&per_page=${perPage}&page=${page}&sparkline=true`,
     300,
+  );
+}
+
+/**
+ * Get coin tickers (trading pairs)
+ */
+export async function getCoinTickers(
+  id: string,
+  page: number = 1,
+): Promise<{ tickers: CoinTicker[] }> {
+  return fetchCoinGecko<{ tickers: CoinTicker[] }>(
+    `/coins/${id}/tickers?page=${page}&order=volume_desc`,
+    300,
+  );
+}
+
+/**
+ * Get global DeFi data
+ */
+export async function getGlobalDeFiData(): Promise<GlobalDeFiData> {
+  return fetchCoinGecko<GlobalDeFiData>('/global/decentralized_finance_defi', 300);
+}
+
+/**
+ * Get exchange rates (BTC-based)
+ */
+export async function getExchangeRates(): Promise<{ rates: Record<string, { name: string; unit: string; value: number; type: string }> }> {
+  return fetchCoinGecko('/exchange_rates', 300);
+}
+
+/**
+ * Get blockchain asset platforms
+ */
+export async function getAssetPlatforms(): Promise<AssetPlatform[]> {
+  return fetchCoinGecko<AssetPlatform[]>(
+    '/asset_platforms?filter=blockchain',
+    3600,
   );
 }
 

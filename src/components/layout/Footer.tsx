@@ -6,8 +6,12 @@ export function Footer() {
           <div className="font-pixel text-[0.5rem] text-muted tracking-widest">
             CRYPTOVERSE — THE ULTIMATE CRYPTOCURRENCY ENCYCLOPEDIA
           </div>
-          <div className="text-sm text-muted">
-            Data provided by <a href="https://www.coingecko.com" target="_blank" rel="noopener noreferrer" className="text-subtle hover:text-white transition-colors">CoinGecko</a>
+          <div className="text-xs text-muted flex flex-wrap gap-x-3 gap-y-1 justify-center">
+            <span>Data:</span>
+            <a href="https://www.coingecko.com" target="_blank" rel="noopener noreferrer" className="text-subtle hover:text-white transition-colors">CoinGecko</a>
+            <a href="https://defillama.com" target="_blank" rel="noopener noreferrer" className="text-subtle hover:text-white transition-colors">DefiLlama</a>
+            <a href="https://alternative.me" target="_blank" rel="noopener noreferrer" className="text-subtle hover:text-white transition-colors">Alternative.me</a>
+            <a href="https://blockchain.info" target="_blank" rel="noopener noreferrer" className="text-subtle hover:text-white transition-colors">Blockchain.com</a>
           </div>
         </div>
       </div>

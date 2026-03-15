@@ -5,6 +5,7 @@ export const dynamic = 'force-dynamic';
 import { routing } from '@/libs/I18nRouting';
 import { getBaseUrl, getI18nPath } from '@/utils/Helpers';
 import { getCoins, getCategories, getExchanges } from '@/libs/CoinGecko';
+import { getChains, getProtocols } from '@/libs/DefiLlama';
 
 function entry(
   baseUrl: string,
@@ -30,18 +31,25 @@ function entry(
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = getBaseUrl();
 
-  const staticRoutes = ['', '/tokens', '/categories', '/exchanges'];
+  const staticRoutes = [
+    '', '/tokens', '/categories', '/exchanges',
+    '/blockchains', '/defi', '/trending', '/stablecoins',
+    '/fear-greed', '/global',
+  ];
 
-  // Fetch data for dynamic routes
   let tokenRoutes: string[] = [];
   let categoryRoutes: string[] = [];
   let exchangeRoutes: string[] = [];
+  let blockchainRoutes: string[] = [];
+  let defiRoutes: string[] = [];
 
   try {
-    const [coins, categories, exchanges] = await Promise.all([
+    const [coins, categories, exchanges, chains, protocols] = await Promise.all([
       getCoins(1, 100),
       getCategories(),
       getExchanges(1, 50),
+      getChains().catch(() => []),
+      getProtocols().catch(() => []),
     ]);
 
     tokenRoutes = coins.map(c => `/tokens/${c.id}`);
@@ -50,6 +58,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       .slice(0, 50)
       .map(c => `/categories/${c.id}`);
     exchangeRoutes = exchanges.map(e => `/exchanges/${e.id}`);
+    blockchainRoutes = chains
+      .filter(c => c.tvl > 0)
+      .sort((a, b) => b.tvl - a.tvl)
+      .slice(0, 30)
+      .map(c => `/blockchains/${c.name.toLowerCase().replace(/\s+/g, '-')}`);
+    defiRoutes = protocols
+      .filter(p => p.tvl > 0)
+      .sort((a, b) => b.tvl - a.tvl)
+      .slice(0, 50)
+      .map(p => `/defi/${p.slug}`);
   } catch {
     // If API fails, generate sitemap without dynamic routes
   }
@@ -59,5 +77,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...tokenRoutes.map(r => entry(baseUrl, r, 0.7, 'daily')),
     ...categoryRoutes.map(r => entry(baseUrl, r, 0.6, 'daily')),
     ...exchangeRoutes.map(r => entry(baseUrl, r, 0.5, 'weekly')),
+    ...blockchainRoutes.map(r => entry(baseUrl, r, 0.6, 'weekly')),
+    ...defiRoutes.map(r => entry(baseUrl, r, 0.5, 'weekly')),
   ];
 }

@@ -34,7 +34,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = [
     '', '/tokens', '/categories', '/exchanges',
     '/blockchains', '/defi', '/trending', '/stablecoins',
-    '/fear-greed', '/global',
+    '/fear-greed', '/global', '/news', '/forex', '/yields', '/dex',
   ];
 
   let tokenRoutes: string[] = [];

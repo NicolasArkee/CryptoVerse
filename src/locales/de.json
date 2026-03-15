@@ -9,7 +9,11 @@
     "trending": "Trends",
     "stablecoins": "Stablecoins",
     "fear_greed": "Fear & Greed",
-    "global": "Globaler Markt"
+    "global": "Globaler Markt",
+    "news": "Nachrichten",
+    "forex": "Forex",
+    "yields": "Renditen",
+    "dex": "DEX"
   },
   "HomePage": {
     "meta_title": "CryptoVerse — Die ultimative Kryptowaehrungs-Enzyklopaedie",
@@ -62,7 +66,27 @@
     "trading_pairs": "Handelspaare",
     "converter": "Umrechner",
     "roi_calculator": "ROI-Rechner",
-    "view_all_markets": "Alle Maerkte anzeigen"
+    "view_all_markets": "Alle Maerkte anzeigen",
+    "scores": "CoinGecko-Bewertungen",
+    "community_score": "Community",
+    "developer_score": "Entwickler",
+    "liquidity_score": "Liquiditat",
+    "public_interest_score": "Offentliches Interesse",
+    "sentiment": "Stimmung",
+    "votes_up": "Bullisch",
+    "votes_down": "Barisch",
+    "contract_addresses": "Vertragsadressen",
+    "developer_activity": "Entwickleraktivitat",
+    "commits_4w": "Commits (4 Wochen)",
+    "prs_merged": "PRs zusammengefuhrt",
+    "contributors": "Mitwirkende",
+    "code_changes": "Code-Anderungen",
+    "social_community": "Social & Community",
+    "genesis_date": "Erstellungsdatum",
+    "whitepaper_section": "Whitepaper",
+    "dex_pairs": "DEX-Paare",
+    "latest_news": "Aktuelle Nachrichten",
+    "watchlist_users": "Portfolio-Nutzer"
   },
   "TokenMarketsPage": {
     "meta_title": "{name} Maerkte — CryptoVerse",
@@ -204,6 +228,56 @@
     "neutral": "Neutral",
     "greed": "Gier",
     "extreme_greed": "Extreme Gier"
+  },
+  "NewsPage": {
+    "meta_title": "Crypto-Nachrichten — CryptoVerse",
+    "meta_description": "Aktuelle Kryptowahrungsnachrichten und Marktaktualisierungen in Echtzeit.",
+    "title": "Crypto-Nachrichten",
+    "description": "Aktuelle Kryptowahrungsnachrichten und Marktaktualisierungen",
+    "filter_all": "Alle",
+    "filter_rising": "Steigend",
+    "filter_hot": "Beliebt",
+    "filter_bullish": "Bullisch",
+    "filter_bearish": "Barisch",
+    "source": "Quelle",
+    "published": "Veroffentlicht",
+    "read_article": "Artikel lesen"
+  },
+  "ForexPage": {
+    "meta_title": "Forex & Wechselkurse — CryptoVerse",
+    "meta_description": "Crypto- und Fiat-Wechselkurse. BTC, EUR, USD Kreuzkurse taglich aktualisiert.",
+    "title": "Forex & Wechselkurse",
+    "description": "Crypto- und Fiat-Wechselkurse",
+    "crypto_rates": "Crypto-Wechselkurse",
+    "fiat_rates": "Fiat-Wechselkurse",
+    "btc_price_in": "BTC-Preis in",
+    "currency": "Wahrung",
+    "rate": "Kurs",
+    "last_updated": "Letzte Aktualisierung"
+  },
+  "YieldsPage": {
+    "meta_title": "DeFi-Renditen — CryptoVerse",
+    "meta_description": "Yield-Farming-Pools nach APY sortiert. Vergleichen Sie Protokolle, Chains und TVL.",
+    "title": "DeFi-Renditen",
+    "description": "Yield-Farming-Pools nach APY sortiert",
+    "protocol": "Protokoll",
+    "chain": "Chain",
+    "pool": "Pool",
+    "tvl": "TVL",
+    "apy_base": "APY Basis",
+    "apy_reward": "APY Belohnung",
+    "apy_total": "APY Gesamt"
+  },
+  "DexPage": {
+    "meta_title": "DEX-Trading — CryptoVerse",
+    "meta_description": "Dezentrale Borsenvolumina und Rankings. Uniswap, Curve, PancakeSwap und mehr.",
+    "title": "DEX-Ubersicht",
+    "description": "Handelsvolumina dezentraler Borsen",
+    "dex_name": "DEX",
+    "chain": "Chain",
+    "volume_24h": "24h-Volumen",
+    "volume_7d": "7d-Volumen",
+    "change_1d": "24h-Anderung"
   },
   "Common": {
     "not_found": "Seite nicht gefunden",

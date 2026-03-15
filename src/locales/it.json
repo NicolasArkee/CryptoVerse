@@ -9,7 +9,11 @@
     "trending": "Tendenze",
     "stablecoins": "Stablecoin",
     "fear_greed": "Fear & Greed",
-    "global": "Mercato globale"
+    "global": "Mercato globale",
+    "news": "Notizie",
+    "forex": "Forex",
+    "yields": "Rendimenti",
+    "dex": "DEX"
   },
   "HomePage": {
     "meta_title": "CryptoVerse — L'enciclopedia definitiva delle criptovalute",
@@ -62,7 +66,27 @@
     "trading_pairs": "Coppie di trading",
     "converter": "Convertitore",
     "roi_calculator": "Calcolatore ROI",
-    "view_all_markets": "Vedi tutti i mercati"
+    "view_all_markets": "Vedi tutti i mercati",
+    "scores": "Punteggi CoinGecko",
+    "community_score": "Comunita",
+    "developer_score": "Sviluppatore",
+    "liquidity_score": "Liquidita",
+    "public_interest_score": "Interesse pubblico",
+    "sentiment": "Sentimento",
+    "votes_up": "Rialzista",
+    "votes_down": "Ribassista",
+    "contract_addresses": "Indirizzi contratto",
+    "developer_activity": "Attivita sviluppatore",
+    "commits_4w": "Commit (4 settimane)",
+    "prs_merged": "PR uniti",
+    "contributors": "Contributori",
+    "code_changes": "Modifiche codice",
+    "social_community": "Social e Comunita",
+    "genesis_date": "Data di creazione",
+    "whitepaper_section": "Whitepaper",
+    "dex_pairs": "Coppie DEX",
+    "latest_news": "Ultime notizie",
+    "watchlist_users": "Utenti in watchlist"
   },
   "TokenMarketsPage": {
     "meta_title": "{name} Mercati — CryptoVerse",
@@ -204,6 +228,56 @@
     "neutral": "Neutrale",
     "greed": "Avidita",
     "extreme_greed": "Avidita estrema"
+  },
+  "NewsPage": {
+    "meta_title": "Notizie Crypto — CryptoVerse",
+    "meta_description": "Ultime notizie e aggiornamenti del mercato delle criptovalute in tempo reale.",
+    "title": "Notizie Crypto",
+    "description": "Ultime notizie e aggiornamenti del mercato",
+    "filter_all": "Tutto",
+    "filter_rising": "In crescita",
+    "filter_hot": "Popolare",
+    "filter_bullish": "Rialzista",
+    "filter_bearish": "Ribassista",
+    "source": "Fonte",
+    "published": "Pubblicato",
+    "read_article": "Leggi articolo"
+  },
+  "ForexPage": {
+    "meta_title": "Forex e Tassi di cambio — CryptoVerse",
+    "meta_description": "Tassi di cambio crypto e fiat. BTC, EUR, USD tassi incrociati aggiornati quotidianamente.",
+    "title": "Forex e Tassi di cambio",
+    "description": "Tassi di cambio crypto e fiat",
+    "crypto_rates": "Tassi di cambio crypto",
+    "fiat_rates": "Tassi di cambio fiat",
+    "btc_price_in": "Prezzo BTC in",
+    "currency": "Valuta",
+    "rate": "Tasso",
+    "last_updated": "Ultimo aggiornamento"
+  },
+  "YieldsPage": {
+    "meta_title": "Rendimenti DeFi — CryptoVerse",
+    "meta_description": "Pool di yield farming classificati per APY. Confronta protocolli, chain e TVL.",
+    "title": "Rendimenti DeFi",
+    "description": "Pool di yield farming classificati per APY",
+    "protocol": "Protocollo",
+    "chain": "Chain",
+    "pool": "Pool",
+    "tvl": "TVL",
+    "apy_base": "APY Base",
+    "apy_reward": "APY Ricompensa",
+    "apy_total": "APY Totale"
+  },
+  "DexPage": {
+    "meta_title": "Trading DEX — CryptoVerse",
+    "meta_description": "Volumi e classifiche degli exchange decentralizzati. Uniswap, Curve, PancakeSwap e altro.",
+    "title": "Panoramica DEX",
+    "description": "Volumi di trading degli exchange decentralizzati",
+    "dex_name": "DEX",
+    "chain": "Chain",
+    "volume_24h": "Volume 24h",
+    "volume_7d": "Volume 7g",
+    "change_1d": "Variazione 24h"
   },
   "Common": {
     "not_found": "Pagina non trovata",

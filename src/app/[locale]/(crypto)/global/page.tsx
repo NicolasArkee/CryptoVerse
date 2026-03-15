@@ -1,11 +1,13 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { buildMetadata } from '@/utils/Seo';
-import { getGlobalData, getGlobalDeFiData, formatCurrency, getLocaleForIntl } from '@/libs/CoinGecko';
+import { getGlobalData, getGlobalDeFiData, getExchangeRates, formatCurrency, getLocaleForIntl } from '@/libs/CoinGecko';
 import { getBTCStats, formatHashRate, formatDifficulty } from '@/libs/BlockchainInfo';
 import { getFearGreedIndex, getFearGreedLabel } from '@/libs/FearGreed';
+import { getLatestNews } from '@/libs/CryptoPanic';
 import { MarketDominanceBar } from '@/components/crypto/MarketDominanceBar';
 import { FearGreedGauge } from '@/components/crypto/FearGreedGauge';
+import { NewsFeed } from '@/components/crypto/NewsFeed';
 
 interface GlobalPageProps {
   params: Promise<{ locale: string }>;
@@ -23,11 +25,13 @@ export default async function GlobalPage(props: GlobalPageProps) {
   const t = await getTranslations({ locale, namespace: 'GlobalPage' });
   const intlLocale = getLocaleForIntl(locale);
 
-  const [globalData, defiData, btcStats, fgData] = await Promise.all([
+  const [globalData, defiData, btcStats, fgData, btcRates, latestNews] = await Promise.all([
     getGlobalData().catch(() => null),
     getGlobalDeFiData().catch(() => null),
     getBTCStats().catch(() => null),
     getFearGreedIndex(1).catch(() => []),
+    getExchangeRates().catch(() => null),
+    getLatestNews('hot').catch(() => []),
   ]);
 
   const gd = globalData?.data;
@@ -131,6 +135,36 @@ export default async function GlobalPage(props: GlobalPageProps) {
           <FearGreedGauge value={fgValue} label={t(fgLabel as 'extreme_fear' | 'fear' | 'neutral' | 'greed' | 'extreme_greed')} />
         </div>
       </section>
+
+      {/* BTC Exchange Rates (Forex mini) */}
+      {btcRates?.rates && (
+        <section className="mb-10">
+          <div className="font-pixel text-[0.42rem] text-green-bright tracking-[0.12em] mb-4">&#9654; {t('exchange_rates')}</div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {Object.entries(btcRates.rates)
+              .filter(([, r]) => r.type === 'fiat')
+              .sort(([a], [b]) => a.localeCompare(b))
+              .slice(0, 8)
+              .map(([code, rate]) => (
+                <div key={code} className="bg-dark border border-border p-3">
+                  <div className="text-[0.65rem] text-muted mb-1">{rate.name}</div>
+                  <div className="text-sm font-semibold text-white tabular-nums">
+                    {rate.unit}{Math.round(rate.value).toLocaleString(intlLocale)}
+                  </div>
+                  <div className="text-[0.55rem] text-subtle">{code}</div>
+                </div>
+              ))}
+          </div>
+        </section>
+      )}
+
+      {/* Latest News */}
+      {latestNews.length > 0 && (
+        <section className="mb-10">
+          <div className="font-pixel text-[0.42rem] text-green-bright tracking-[0.12em] mb-4">&#9654; Latest News</div>
+          <NewsFeed posts={latestNews} maxItems={5} />
+        </section>
+      )}
     </div>
   );
 }

@@ -50,6 +50,18 @@ export function Navbar() {
         <Link href="/global" className="text-muted hover:text-green text-xs transition-colors">
           {t('global')}
         </Link>
+        <Link href="/news" className="text-muted hover:text-green text-xs transition-colors">
+          {t('news')}
+        </Link>
+        <Link href="/forex" className="text-muted hover:text-green text-xs transition-colors">
+          {t('forex')}
+        </Link>
+        <Link href="/yields" className="text-muted hover:text-green text-xs transition-colors">
+          {t('yields')}
+        </Link>
+        <Link href="/dex" className="text-muted hover:text-green text-xs transition-colors">
+          {t('dex')}
+        </Link>
       </div>
     </nav>
   );

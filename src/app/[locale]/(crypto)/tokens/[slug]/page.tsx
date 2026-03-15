@@ -11,16 +11,28 @@ import {
   getLocaleForIntl,
   getLocalizedDescription,
 } from '@/libs/CoinGecko';
+import { getNewsByCoin } from '@/libs/CryptoPanic';
+import { getTokenPairs } from '@/libs/DexScreener';
 import { Link } from '@/libs/I18nNavigation';
 import { PriceChange } from '@/components/crypto/PriceChange';
 import { InteractiveChart } from '@/components/crypto/InteractiveChart';
 import { CategoryBadge } from '@/components/crypto/CategoryBadge';
 import { Breadcrumbs } from '@/components/crypto/Breadcrumbs';
 import { SupplyBar } from '@/components/crypto/SupplyBar';
-import { CommunityStats } from '@/components/crypto/CommunityStats';
 import { TradingPairRow } from '@/components/crypto/TradingPairRow';
 import { PriceConverter } from '@/components/crypto/PriceConverter';
 import { ROICalculator } from '@/components/crypto/ROICalculator';
+import { ScoreDashboard } from '@/components/crypto/ScoreDashboard';
+import { SentimentBar } from '@/components/crypto/SentimentBar';
+import { ContractAddresses } from '@/components/crypto/ContractAddresses';
+import { DeveloperActivity } from '@/components/crypto/DeveloperActivity';
+import { SocialLinks } from '@/components/crypto/SocialLinks';
+import { WhitepaperCard } from '@/components/crypto/WhitepaperCard';
+import { GenesisInfo } from '@/components/crypto/GenesisInfo';
+import { WatchlistBadge } from '@/components/crypto/WatchlistBadge';
+import { DexPairsTable } from '@/components/crypto/DexPairsTable';
+import { NewsFeed } from '@/components/crypto/NewsFeed';
+import { TokenJsonLd } from '@/components/crypto/TokenJsonLd';
 
 interface TokenDetailPageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -69,6 +81,13 @@ export default async function TokenDetailPage(props: TokenDetailPageProps) {
   const cleanDescription = description.replace(/<[^>]*>/g, '');
   const topTickers = tickers?.tickers?.slice(0, 10) || [];
 
+  // Fetch DEX pairs and news in parallel (non-blocking)
+  const ethAddress = coin.platforms?.ethereum;
+  const [dexPairs, coinNews] = await Promise.all([
+    ethAddress ? getTokenPairs(ethAddress).catch(() => []) : Promise.resolve([]),
+    getNewsByCoin(coin.symbol).catch(() => []),
+  ]);
+
   return (
     <div className="mx-auto max-w-[80rem] px-6 py-12">
       <Breadcrumbs items={[
@@ -85,10 +104,14 @@ export default async function TokenDetailPage(props: TokenDetailPageProps) {
             <div className="flex items-center gap-3">
               <h1 className="text-2xl md:text-3xl font-bold text-white">{coin.name}</h1>
               <span className="text-muted text-lg uppercase">{coin.symbol}</span>
+              <WatchlistBadge users={coin.watchlist_portfolio_users} />
             </div>
-            {coin.market_cap_rank && (
-              <div className="font-pixel text-[0.4rem] text-muted mt-1">{t('rank')} #{coin.market_cap_rank}</div>
-            )}
+            <div className="flex items-center gap-3 mt-1">
+              {coin.market_cap_rank && (
+                <span className="font-pixel text-[0.4rem] text-muted">{t('rank')} #{coin.market_cap_rank}</span>
+              )}
+              <GenesisInfo genesisDate={coin.genesis_date} />
+            </div>
           </div>
         </div>
 
@@ -180,6 +203,35 @@ export default async function TokenDetailPage(props: TokenDetailPageProps) {
         )}
       </div>
 
+      {/* CoinGecko Scores */}
+      {(coin.coingecko_score > 0) && (
+        <section className="mb-10">
+          <div className="font-pixel text-[0.42rem] text-green-bright tracking-[0.12em] mb-4">
+            &#9654; {t('scores')}
+          </div>
+          <ScoreDashboard
+            overall={coin.coingecko_score}
+            community={coin.community_score}
+            developer={coin.developer_score}
+            liquidity={coin.liquidity_score}
+            publicInterest={coin.public_interest_score}
+          />
+        </section>
+      )}
+
+      {/* Sentiment */}
+      {(coin.sentiment_votes_up_percentage != null && coin.sentiment_votes_down_percentage != null) && (
+        <section className="mb-10">
+          <div className="font-pixel text-[0.42rem] text-green-bright tracking-[0.12em] mb-4">
+            &#9654; {t('sentiment')}
+          </div>
+          <SentimentBar
+            upPercentage={coin.sentiment_votes_up_percentage}
+            downPercentage={coin.sentiment_votes_down_percentage}
+          />
+        </section>
+      )}
+
       {/* Supply Distribution */}
       {md.circulating_supply > 0 && (
         <section className="mb-10">
@@ -202,20 +254,36 @@ export default async function TokenDetailPage(props: TokenDetailPageProps) {
         </div>
       </section>
 
-      {/* Community & Social */}
-      <CommunityStats
-        twitterFollowers={coin.community_data?.twitter_followers}
-        redditSubscribers={coin.community_data?.reddit_subscribers}
-        githubStars={coin.developer_data?.stars}
-        githubForks={coin.developer_data?.forks}
-      />
-      {(coin.community_data?.twitter_followers || coin.community_data?.reddit_subscribers || coin.developer_data?.stars || coin.developer_data?.forks) && (
-        <div className="font-pixel text-[0.42rem] text-green-bright tracking-[0.12em] mb-4 -mt-6">
-          &#9654; {t('community')}
-        </div>
+      {/* Contract Addresses */}
+      {coin.platforms && Object.keys(coin.platforms).filter(k => coin.platforms[k]).length > 0 && (
+        <section className="mb-10">
+          <div className="font-pixel text-[0.42rem] text-green-bright tracking-[0.12em] mb-4">
+            &#9654; {t('contract_addresses')}
+          </div>
+          <ContractAddresses platforms={coin.platforms} />
+        </section>
       )}
 
-      {/* Trading Pairs */}
+      {/* Developer Activity */}
+      <section className="mb-10">
+        <div className="font-pixel text-[0.42rem] text-green-bright tracking-[0.12em] mb-4">
+          &#9654; {t('developer_activity')}
+        </div>
+        <DeveloperActivity
+          data={coin.developer_data}
+          repoUrls={coin.links?.repos_url?.github}
+        />
+      </section>
+
+      {/* Social & Community */}
+      <section className="mb-10">
+        <div className="font-pixel text-[0.42rem] text-green-bright tracking-[0.12em] mb-4">
+          &#9654; {t('social_community')}
+        </div>
+        <SocialLinks links={coin.links} communityData={coin.community_data} />
+      </section>
+
+      {/* Trading Pairs (CEX) */}
       {topTickers.length > 0 && (
         <section className="mb-10">
           <div className="font-pixel text-[0.42rem] text-green-bright tracking-[0.12em] mb-4">
@@ -249,6 +317,16 @@ export default async function TokenDetailPage(props: TokenDetailPageProps) {
         </section>
       )}
 
+      {/* DEX Pairs */}
+      {dexPairs.length > 0 && (
+        <section className="mb-10">
+          <div className="font-pixel text-[0.42rem] text-green-bright tracking-[0.12em] mb-4">
+            &#9654; {t('dex_pairs')}
+          </div>
+          <DexPairsTable pairs={dexPairs} />
+        </section>
+      )}
+
       {/* Price Converter */}
       {(md.current_price?.usd ?? 0) > 0 && (
         <section className="mb-10">
@@ -278,6 +356,16 @@ export default async function TokenDetailPage(props: TokenDetailPageProps) {
         </section>
       )}
 
+      {/* Whitepaper */}
+      {coin.links?.whitepaper && (
+        <section className="mb-10">
+          <div className="font-pixel text-[0.42rem] text-green-bright tracking-[0.12em] mb-4">
+            &#9654; {t('whitepaper_section')}
+          </div>
+          <WhitepaperCard url={coin.links.whitepaper} coinName={coin.name} />
+        </section>
+      )}
+
       {/* Description */}
       {cleanDescription && (
         <section className="mb-10">
@@ -297,8 +385,8 @@ export default async function TokenDetailPage(props: TokenDetailPageProps) {
             &#9654; {t('links')}
           </div>
           <div className="flex flex-wrap gap-3">
-            {coin.links.homepage.filter(Boolean).map((url, i) => (
-              <a key={i} href={url} target="_blank" rel="noopener noreferrer" className="border border-border hover:border-green/50 text-subtle hover:text-white px-4 py-2 text-sm transition-colors">
+            {coin.links.homepage?.filter(Boolean).map((url, i) => (
+              <a key={`hp-${i}`} href={url} target="_blank" rel="noopener noreferrer" className="border border-border hover:border-green/50 text-subtle hover:text-white px-4 py-2 text-sm transition-colors">
                 {t('website')} &rarr;
               </a>
             ))}
@@ -307,12 +395,52 @@ export default async function TokenDetailPage(props: TokenDetailPageProps) {
                 {t('whitepaper')} &rarr;
               </a>
             )}
-            {coin.links.blockchain_site.filter(Boolean).slice(0, 3).map((url, i) => (
-              <a key={i} href={url} target="_blank" rel="noopener noreferrer" className="border border-border hover:border-border-light text-subtle hover:text-white px-4 py-2 text-sm transition-colors">
+            {coin.links.blockchain_site?.filter(Boolean).slice(0, 3).map((url, i) => (
+              <a key={`ex-${i}`} href={url} target="_blank" rel="noopener noreferrer" className="border border-border hover:border-border-light text-subtle hover:text-white px-4 py-2 text-sm transition-colors">
                 {t('explorer')} &rarr;
               </a>
             ))}
+            {coin.links.subreddit_url && (
+              <a href={coin.links.subreddit_url} target="_blank" rel="noopener noreferrer" className="border border-border hover:border-orange-500/50 text-subtle hover:text-white px-4 py-2 text-sm transition-colors">
+                Reddit &rarr;
+              </a>
+            )}
+            {coin.links.twitter_screen_name && (
+              <a href={`https://x.com/${coin.links.twitter_screen_name}`} target="_blank" rel="noopener noreferrer" className="border border-border hover:border-blue-400/50 text-subtle hover:text-white px-4 py-2 text-sm transition-colors">
+                Twitter / X &rarr;
+              </a>
+            )}
+            {coin.links.telegram_channel_identifier && (
+              <a href={`https://t.me/${coin.links.telegram_channel_identifier}`} target="_blank" rel="noopener noreferrer" className="border border-border hover:border-sky-400/50 text-subtle hover:text-white px-4 py-2 text-sm transition-colors">
+                Telegram &rarr;
+              </a>
+            )}
+            {coin.links.chat_url?.filter(Boolean).slice(0, 2).map((url, i) => (
+              <a key={`chat-${i}`} href={url} target="_blank" rel="noopener noreferrer" className="border border-border hover:border-indigo-400/50 text-subtle hover:text-white px-4 py-2 text-sm transition-colors">
+                {url.includes('discord') ? 'Discord' : 'Chat'} &rarr;
+              </a>
+            ))}
+            {coin.links.official_forum_url?.filter(Boolean).slice(0, 1).map((url, i) => (
+              <a key={`forum-${i}`} href={url} target="_blank" rel="noopener noreferrer" className="border border-border hover:border-border-light text-subtle hover:text-white px-4 py-2 text-sm transition-colors">
+                Forum &rarr;
+              </a>
+            ))}
+            {coin.links.repos_url?.github?.filter(Boolean).slice(0, 1).map((url, i) => (
+              <a key={`gh-${i}`} href={url} target="_blank" rel="noopener noreferrer" className="border border-border hover:border-border-light text-subtle hover:text-white px-4 py-2 text-sm transition-colors">
+                GitHub &rarr;
+              </a>
+            ))}
           </div>
+        </section>
+      )}
+
+      {/* Latest News */}
+      {coinNews.length > 0 && (
+        <section className="mb-10">
+          <div className="font-pixel text-[0.42rem] text-green-bright tracking-[0.12em] mb-4">
+            &#9654; {t('latest_news')}
+          </div>
+          <NewsFeed posts={coinNews} maxItems={5} />
         </section>
       )}
 
@@ -329,6 +457,17 @@ export default async function TokenDetailPage(props: TokenDetailPageProps) {
           </div>
         </section>
       )}
+
+      {/* JSON-LD */}
+      <TokenJsonLd
+        name={coin.name}
+        symbol={coin.symbol}
+        description={cleanDescription.slice(0, 300)}
+        image={coin.image.large}
+        priceUsd={md.current_price.usd || 0}
+        marketCap={md.market_cap.usd || 0}
+        slug={slug}
+      />
     </div>
   );
 }

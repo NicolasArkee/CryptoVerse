@@ -9,7 +9,11 @@
     "trending": "Trending",
     "stablecoins": "Stablecoins",
     "fear_greed": "Fear & Greed",
-    "global": "Global Market"
+    "global": "Global Market",
+    "news": "News",
+    "forex": "Forex",
+    "yields": "Yields",
+    "dex": "DEX"
   },
   "HomePage": {
     "meta_title": "CryptoVerse — The ultimate cryptocurrency encyclopedia",
@@ -62,7 +66,27 @@
     "trading_pairs": "Trading Pairs",
     "converter": "Converter",
     "roi_calculator": "ROI Calculator",
-    "view_all_markets": "View all markets"
+    "view_all_markets": "View all markets",
+    "scores": "CoinGecko Scores",
+    "community_score": "Community",
+    "developer_score": "Developer",
+    "liquidity_score": "Liquidity",
+    "public_interest_score": "Public Interest",
+    "sentiment": "Sentiment",
+    "votes_up": "Bullish",
+    "votes_down": "Bearish",
+    "contract_addresses": "Contract Addresses",
+    "developer_activity": "Developer Activity",
+    "commits_4w": "Commits (4 weeks)",
+    "prs_merged": "PRs Merged",
+    "contributors": "Contributors",
+    "code_changes": "Code Changes",
+    "social_community": "Social & Community",
+    "genesis_date": "Genesis Date",
+    "whitepaper_section": "Whitepaper",
+    "dex_pairs": "DEX Pairs",
+    "latest_news": "Latest News",
+    "watchlist_users": "Portfolio Users"
   },
   "TokenMarketsPage": {
     "meta_title": "{name} Markets — CryptoVerse",
@@ -204,6 +228,56 @@
     "neutral": "Neutral",
     "greed": "Greed",
     "extreme_greed": "Extreme Greed"
+  },
+  "NewsPage": {
+    "meta_title": "Crypto News — CryptoVerse",
+    "meta_description": "Latest cryptocurrency news and market updates in real-time.",
+    "title": "Crypto News",
+    "description": "Latest cryptocurrency news and market updates",
+    "filter_all": "All",
+    "filter_rising": "Rising",
+    "filter_hot": "Hot",
+    "filter_bullish": "Bullish",
+    "filter_bearish": "Bearish",
+    "source": "Source",
+    "published": "Published",
+    "read_article": "Read article"
+  },
+  "ForexPage": {
+    "meta_title": "Forex & Exchange Rates — CryptoVerse",
+    "meta_description": "Crypto and fiat exchange rates. BTC, EUR, USD cross-rates updated daily.",
+    "title": "Forex & Exchange Rates",
+    "description": "Crypto and fiat exchange rates",
+    "crypto_rates": "Crypto Exchange Rates",
+    "fiat_rates": "Fiat Exchange Rates",
+    "btc_price_in": "BTC Price In",
+    "currency": "Currency",
+    "rate": "Rate",
+    "last_updated": "Last Updated"
+  },
+  "YieldsPage": {
+    "meta_title": "DeFi Yields — CryptoVerse",
+    "meta_description": "DeFi yield farming pools ranked by APY. Compare protocols, chains and TVL.",
+    "title": "DeFi Yields",
+    "description": "Yield farming pools ranked by APY",
+    "protocol": "Protocol",
+    "chain": "Chain",
+    "pool": "Pool",
+    "tvl": "TVL",
+    "apy_base": "APY Base",
+    "apy_reward": "APY Reward",
+    "apy_total": "APY Total"
+  },
+  "DexPage": {
+    "meta_title": "DEX Trading — CryptoVerse",
+    "meta_description": "Decentralized exchange volumes and rankings. Uniswap, Curve, PancakeSwap and more.",
+    "title": "DEX Overview",
+    "description": "Decentralized exchange trading volumes",
+    "dex_name": "DEX",
+    "chain": "Chain",
+    "volume_24h": "24h Volume",
+    "volume_7d": "7d Volume",
+    "change_1d": "24h Change"
   },
   "Common": {
     "not_found": "Page not found",

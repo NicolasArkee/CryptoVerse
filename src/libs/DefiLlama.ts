@@ -137,6 +137,56 @@ export async function getChainFees(chain: string): Promise<ChainFees | null> {
   }
 }
 
+// ─── Yield Pools ────────────────────────────────
+
+export interface YieldPool {
+  chain: string;
+  project: string;
+  symbol: string;
+  tvlUsd: number;
+  apyBase: number | null;
+  apyReward: number | null;
+  apy: number;
+  pool: string;
+  stablecoin: boolean;
+  ilRisk: string;
+  exposure: string;
+  poolMeta: string | null;
+}
+
+export async function getYieldPools(): Promise<YieldPool[]> {
+  const res = await fetch('https://yields.llama.fi/pools', {
+    next: { revalidate: 600 },
+  });
+  if (!res.ok) throw new Error(`DefiLlama yields error: ${res.status}`);
+  const data = await res.json() as { data: YieldPool[] };
+  return data.data || [];
+}
+
+// ─── DEX Volumes ────────────────────────────────
+
+export interface DexVolume {
+  name: string;
+  displayName: string;
+  total24h: number | null;
+  total7d: number | null;
+  total30d: number | null;
+  totalAllTime: number | null;
+  change_1d: number | null;
+  chains: string[];
+  logo: string;
+  module: string;
+}
+
+export async function getDexVolumes(): Promise<DexVolume[]> {
+  const res = await fetch(`${BASE_URL}/overview/dexs?excludeTotalDataChart=true&excludeTotalDataChartBreakdown=true`, {
+    next: { revalidate: 600 },
+  });
+  if (!res.ok) throw new Error(`DefiLlama dex volumes error: ${res.status}`);
+  const data = await res.json() as { protocols: DexVolume[] };
+  return data.protocols || [];
+}
+
 // ─── Formatting ──────────────────────────────────
 
 export function formatTVL(value: number): string {

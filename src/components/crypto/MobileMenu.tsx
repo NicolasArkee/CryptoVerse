@@ -62,6 +62,10 @@ export function MobileMenu() {
                 { href: '/stablecoins', label: t('stablecoins') },
                 { href: '/fear-greed', label: t('fear_greed') },
                 { href: '/global', label: t('global') },
+                { href: '/news', label: t('news') },
+                { href: '/forex', label: t('forex') },
+                { href: '/yields', label: t('yields') },
+                { href: '/dex', label: t('dex') },
               ].map(item => (
                 <Link
                   key={item.href}

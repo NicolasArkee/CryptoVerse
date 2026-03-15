@@ -153,6 +153,36 @@ export default async function ExchangeDetailPage(props: ExchangeDetailPageProps)
               Reddit &rarr;
             </a>
           )}
+          {exchange.telegram_url && (
+            <a
+              href={exchange.telegram_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border border-border hover:border-sky-400/50 text-subtle hover:text-white px-4 py-2 text-sm transition-colors"
+            >
+              Telegram &rarr;
+            </a>
+          )}
+          {exchange.other_url_1 && (
+            <a
+              href={exchange.other_url_1}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border border-border hover:border-border-light text-subtle hover:text-white px-4 py-2 text-sm transition-colors"
+            >
+              More &rarr;
+            </a>
+          )}
+          {exchange.other_url_2 && (
+            <a
+              href={exchange.other_url_2}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border border-border hover:border-border-light text-subtle hover:text-white px-4 py-2 text-sm transition-colors"
+            >
+              More &rarr;
+            </a>
+          )}
         </div>
       </section>
     </div>

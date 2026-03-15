@@ -12,6 +12,9 @@ export function Footer() {
             <a href="https://defillama.com" target="_blank" rel="noopener noreferrer" className="text-subtle hover:text-white transition-colors">DefiLlama</a>
             <a href="https://alternative.me" target="_blank" rel="noopener noreferrer" className="text-subtle hover:text-white transition-colors">Alternative.me</a>
             <a href="https://blockchain.info" target="_blank" rel="noopener noreferrer" className="text-subtle hover:text-white transition-colors">Blockchain.com</a>
+            <a href="https://cryptopanic.com" target="_blank" rel="noopener noreferrer" className="text-subtle hover:text-white transition-colors">CryptoPanic</a>
+            <a href="https://www.ecb.europa.eu" target="_blank" rel="noopener noreferrer" className="text-subtle hover:text-white transition-colors">ECB/Frankfurter</a>
+            <a href="https://dexscreener.com" target="_blank" rel="noopener noreferrer" className="text-subtle hover:text-white transition-colors">DexScreener</a>
           </div>
         </div>
       </div>

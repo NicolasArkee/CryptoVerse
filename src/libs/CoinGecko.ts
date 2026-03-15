@@ -49,11 +49,27 @@ export interface CoinDetail {
     whitepaper: string;
     blockchain_site: string[];
     official_forum_url: string[];
+    chat_url: string[];
+    announcement_url: string[];
+    twitter_screen_name: string;
+    facebook_username: string;
+    telegram_channel_identifier: string;
     subreddit_url: string;
     repos_url: { github: string[]; bitbucket: string[] };
   };
   image: { thumb: string; small: string; large: string };
+  genesis_date: string | null;
+  sentiment_votes_up_percentage: number | null;
+  sentiment_votes_down_percentage: number | null;
+  watchlist_portfolio_users: number | null;
   market_cap_rank: number;
+  coingecko_rank: number | null;
+  coingecko_score: number;
+  developer_score: number;
+  community_score: number;
+  liquidity_score: number;
+  public_interest_score: number;
+  platforms: Record<string, string>;
   market_data: {
     current_price: Record<string, number>;
     ath: Record<string, number>;
@@ -80,13 +96,27 @@ export interface CoinDetail {
   community_data: {
     twitter_followers: number | null;
     reddit_subscribers: number | null;
+    facebook_likes: number | null;
+    reddit_average_posts_48h: number | null;
+    reddit_average_comments_48h: number | null;
+    reddit_accounts_active_48h: number | null;
   };
   developer_data: {
     forks: number | null;
     stars: number | null;
+    subscribers: number | null;
+    total_issues: number | null;
+    closed_issues: number | null;
+    pull_requests_merged: number | null;
+    pull_request_contributors: number | null;
+    code_additions_deletions_4_weeks: { additions: number | null; deletions: number | null };
+    commit_count_4_weeks: number | null;
+    last_4_weeks_commit_activity_series: number[];
   };
   last_updated: string;
 }
+
+export type OHLCData = [number, number, number, number, number][];
 
 export interface MarketChartData {
   prices: [number, number][];
@@ -405,6 +435,33 @@ export async function getExchangeRates(): Promise<{ rates: Record<string, { name
 export async function getAssetPlatforms(): Promise<AssetPlatform[]> {
   return fetchCoinGecko<AssetPlatform[]>(
     '/asset_platforms?filter=blockchain',
+    3600,
+  );
+}
+
+/**
+ * Get coin OHLC candlestick data
+ */
+export async function getCoinOHLC(
+  id: string,
+  days: number = 30,
+  currency: string = 'usd',
+): Promise<OHLCData> {
+  return fetchCoinGecko<OHLCData>(
+    `/coins/${id}/ohlc?vs_currency=${currency}&days=${days}`,
+    300,
+  );
+}
+
+/**
+ * Get coin historical snapshot
+ */
+export async function getCoinHistory(
+  id: string,
+  date: string, // dd-mm-yyyy
+): Promise<{ id: string; symbol: string; name: string; market_data?: { current_price: Record<string, number>; market_cap: Record<string, number> } }> {
+  return fetchCoinGecko(
+    `/coins/${id}/history?date=${date}&localization=false`,
     3600,
   );
 }

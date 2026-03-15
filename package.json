@@ -6,7 +6,7 @@
     "dev:next": "next dev",
     "dev": "run-p db-server:file dev:*",
     "build:next": "next build",
-    "build": "run-s db:migrate build:next",
+    "build": "next build",
     "start": "next start",
     "db-server:file": "pglite-server --db=local.db --run 'pnpm db:migrate'",
     "db-server:memory": "pglite-server --run 'pnpm db:migrate'",

@@ -1,0 +1,90 @@
+{
+  "Navigation": {
+    "home": "Home",
+    "tokens": "Cryptocurrencies",
+    "categories": "Categories",
+    "exchanges": "Exchanges"
+  },
+  "HomePage": {
+    "meta_title": "CryptoVerse — The ultimate cryptocurrency encyclopedia",
+    "meta_description": "Discover all cryptocurrencies, categories and exchanges. Real-time prices, charts, market cap and more.",
+    "title": "CRYPTOVERSE",
+    "subtitle": "The ultimate cryptocurrency encyclopedia",
+    "trending": "TRENDING",
+    "global_stats": "GLOBAL MARKET",
+    "top_coins": "TOP CRYPTOCURRENCIES",
+    "total_market_cap": "Total Market Cap",
+    "total_volume": "24h Volume",
+    "btc_dominance": "BTC Dominance",
+    "active_coins": "Active Coins",
+    "explore_tokens": "Explore Tokens",
+    "explore_categories": "Categories",
+    "explore_exchanges": "Exchanges"
+  },
+  "TokensPage": {
+    "meta_title": "Cryptocurrencies — CryptoVerse",
+    "meta_description": "All cryptocurrencies ranked by market capitalization. Price, 24h volume, sparkline charts.",
+    "title": "Cryptocurrencies",
+    "description": "All cryptocurrencies ranked by market capitalization",
+    "market_cap": "Market Cap",
+    "volume_24h": "24h Volume",
+    "price": "Price",
+    "change_24h": "24h",
+    "circulating": "Circulating"
+  },
+  "TokenDetailPage": {
+    "price": "Price",
+    "market_cap": "Market Cap",
+    "volume": "24h Volume",
+    "circulating_supply": "Circulating Supply",
+    "total_supply": "Total Supply",
+    "max_supply": "Max Supply",
+    "ath": "All-Time High",
+    "atl": "All-Time Low",
+    "description": "About",
+    "links": "Links",
+    "website": "Website",
+    "whitepaper": "Whitepaper",
+    "explorer": "Explorer",
+    "categories": "Categories",
+    "price_chart": "Price Chart (30d)",
+    "rank": "Rank"
+  },
+  "CategoriesPage": {
+    "meta_title": "Categories — CryptoVerse",
+    "meta_description": "Cryptocurrency categories. DeFi, Layer 1, NFT, Metaverse and more.",
+    "title": "Categories",
+    "description": "Cryptocurrency categories",
+    "market_cap": "Market Cap",
+    "coins_count": "{count} tokens",
+    "change_24h": "24h"
+  },
+  "ExchangesPage": {
+    "meta_title": "Exchanges — CryptoVerse",
+    "meta_description": "Cryptocurrency exchange platforms. Ranked by volume and trust score.",
+    "title": "Exchanges",
+    "description": "Cryptocurrency exchange platforms",
+    "trust_score": "Trust Score",
+    "volume_24h": "24h Volume",
+    "year_established": "Year",
+    "country": "Country"
+  },
+  "ExchangeDetailPage": {
+    "trust_score": "Trust Score",
+    "volume_24h": "24h Volume",
+    "year_established": "Founded",
+    "country": "Country",
+    "website": "Website",
+    "description": "About"
+  },
+  "Common": {
+    "not_found": "Page not found",
+    "not_found_description": "The page you are looking for does not exist.",
+    "back_home": "Back to home",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "search_crypto": "Search a cryptocurrency...",
+    "search_no_results": "No results",
+    "view": "View"
+  }
+}

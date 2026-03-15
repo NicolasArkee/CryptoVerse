@@ -1,0 +1,90 @@
+{
+  "Navigation": {
+    "home": "Startseite",
+    "tokens": "Kryptowaehrungen",
+    "categories": "Kategorien",
+    "exchanges": "Boersen"
+  },
+  "HomePage": {
+    "meta_title": "CryptoVerse — Die ultimative Kryptowaehrungs-Enzyklopaedie",
+    "meta_description": "Entdecke alle Kryptowaehrungen, Kategorien und Boersen. Echtzeitpreise, Charts, Marktkapitalisierung und mehr.",
+    "title": "CRYPTOVERSE",
+    "subtitle": "Die ultimative Kryptowaehrungs-Enzyklopaedie",
+    "trending": "TRENDS",
+    "global_stats": "GLOBALER MARKT",
+    "top_coins": "TOP KRYPTOWAEHRUNGEN",
+    "total_market_cap": "Gesamte Marktk.",
+    "total_volume": "24h Volumen",
+    "btc_dominance": "BTC Dominanz",
+    "active_coins": "Aktive Coins",
+    "explore_tokens": "Tokens erkunden",
+    "explore_categories": "Kategorien",
+    "explore_exchanges": "Boersen"
+  },
+  "TokensPage": {
+    "meta_title": "Kryptowaehrungen — CryptoVerse",
+    "meta_description": "Alle Kryptowaehrungen nach Marktkapitalisierung sortiert. Preis, 24h Volumen, Sparkline-Charts.",
+    "title": "Kryptowaehrungen",
+    "description": "Alle Kryptowaehrungen nach Marktkapitalisierung sortiert",
+    "market_cap": "Marktk.",
+    "volume_24h": "24h Volumen",
+    "price": "Preis",
+    "change_24h": "24h",
+    "circulating": "Umlaufversorgung"
+  },
+  "TokenDetailPage": {
+    "price": "Preis",
+    "market_cap": "Marktkapitalisierung",
+    "volume": "24h Volumen",
+    "circulating_supply": "Umlaufversorgung",
+    "total_supply": "Gesamtversorgung",
+    "max_supply": "Max. Versorgung",
+    "ath": "Allzeithoch",
+    "atl": "Allzeittief",
+    "description": "Ueber",
+    "links": "Links",
+    "website": "Webseite",
+    "whitepaper": "Whitepaper",
+    "explorer": "Explorer",
+    "categories": "Kategorien",
+    "price_chart": "Preisdiagramm (30T)",
+    "rank": "Rang"
+  },
+  "CategoriesPage": {
+    "meta_title": "Kategorien — CryptoVerse",
+    "meta_description": "Kryptowaehrungskategorien. DeFi, Layer 1, NFT, Metaverse und mehr.",
+    "title": "Kategorien",
+    "description": "Kryptowaehrungskategorien",
+    "market_cap": "Marktk.",
+    "coins_count": "{count} Tokens",
+    "change_24h": "24h"
+  },
+  "ExchangesPage": {
+    "meta_title": "Boersen — CryptoVerse",
+    "meta_description": "Kryptowaehrungsboersen. Sortiert nach Volumen und Vertrauensbewertung.",
+    "title": "Boersen",
+    "description": "Kryptowaehrungsboersen",
+    "trust_score": "Vertrauensbewertung",
+    "volume_24h": "24h Volumen",
+    "year_established": "Jahr",
+    "country": "Land"
+  },
+  "ExchangeDetailPage": {
+    "trust_score": "Vertrauensbewertung",
+    "volume_24h": "24h Volumen",
+    "year_established": "Gegruendet",
+    "country": "Land",
+    "website": "Webseite",
+    "description": "Ueber"
+  },
+  "Common": {
+    "not_found": "Seite nicht gefunden",
+    "not_found_description": "Die Seite, die du suchst, existiert nicht.",
+    "back_home": "Zurueck zur Startseite",
+    "loading": "Laden...",
+    "error": "Ein Fehler ist aufgetreten",
+    "search_crypto": "Kryptowaehrung suchen...",
+    "search_no_results": "Keine Ergebnisse",
+    "view": "Ansehen"
+  }
+}

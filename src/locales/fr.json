@@ -1,0 +1,90 @@
+{
+  "Navigation": {
+    "home": "Accueil",
+    "tokens": "Cryptomonnaies",
+    "categories": "Categories",
+    "exchanges": "Echanges"
+  },
+  "HomePage": {
+    "meta_title": "CryptoVerse — L'encyclopedie ultime des cryptomonnaies",
+    "meta_description": "Decouvrez toutes les cryptomonnaies, categories et exchanges. Prix en temps reel, graphiques, capitalisation et plus.",
+    "title": "CRYPTOVERSE",
+    "subtitle": "L'encyclopedie ultime des cryptomonnaies",
+    "trending": "TENDANCES",
+    "global_stats": "MARCHE MONDIAL",
+    "top_coins": "TOP CRYPTOMONNAIES",
+    "total_market_cap": "Cap. totale",
+    "total_volume": "Volume 24h",
+    "btc_dominance": "Dominance BTC",
+    "active_coins": "Cryptos actives",
+    "explore_tokens": "Explorer les tokens",
+    "explore_categories": "Categories",
+    "explore_exchanges": "Echanges"
+  },
+  "TokensPage": {
+    "meta_title": "Cryptomonnaies — CryptoVerse",
+    "meta_description": "Toutes les cryptomonnaies classees par capitalisation. Prix, volume 24h, graphiques sparkline.",
+    "title": "Cryptomonnaies",
+    "description": "Toutes les cryptomonnaies classees par capitalisation",
+    "market_cap": "Cap. marche",
+    "volume_24h": "Volume 24h",
+    "price": "Prix",
+    "change_24h": "24h",
+    "circulating": "En circulation"
+  },
+  "TokenDetailPage": {
+    "price": "Prix",
+    "market_cap": "Capitalisation",
+    "volume": "Volume 24h",
+    "circulating_supply": "Offre en circulation",
+    "total_supply": "Offre totale",
+    "max_supply": "Offre maximale",
+    "ath": "Plus haut historique",
+    "atl": "Plus bas historique",
+    "description": "A propos",
+    "links": "Liens",
+    "website": "Site web",
+    "whitepaper": "Livre blanc",
+    "explorer": "Explorateur",
+    "categories": "Categories",
+    "price_chart": "Graphique de prix (30j)",
+    "rank": "Rang"
+  },
+  "CategoriesPage": {
+    "meta_title": "Categories — CryptoVerse",
+    "meta_description": "Categories de cryptomonnaies. DeFi, Layer 1, NFT, Metaverse et plus.",
+    "title": "Categories",
+    "description": "Categories de cryptomonnaies",
+    "market_cap": "Cap. marche",
+    "coins_count": "{count} tokens",
+    "change_24h": "24h"
+  },
+  "ExchangesPage": {
+    "meta_title": "Echanges — CryptoVerse",
+    "meta_description": "Plateformes d'echange de cryptomonnaies. Classement par volume et score de confiance.",
+    "title": "Echanges",
+    "description": "Plateformes d'echange de cryptomonnaies",
+    "trust_score": "Score de confiance",
+    "volume_24h": "Volume 24h",
+    "year_established": "Annee",
+    "country": "Pays"
+  },
+  "ExchangeDetailPage": {
+    "trust_score": "Score de confiance",
+    "volume_24h": "Volume 24h",
+    "year_established": "Fonde en",
+    "country": "Pays",
+    "website": "Site web",
+    "description": "A propos"
+  },
+  "Common": {
+    "not_found": "Page non trouvee",
+    "not_found_description": "La page que vous recherchez n'existe pas.",
+    "back_home": "Retour a l'accueil",
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "search_crypto": "Rechercher une cryptomonnaie...",
+    "search_no_results": "Aucun resultat",
+    "view": "Voir"
+  }
+}

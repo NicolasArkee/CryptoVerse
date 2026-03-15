@@ -1,0 +1,61 @@
+@import 'tailwindcss';
+
+@theme {
+  /* ─── CRYPTOVERSE DESIGN TOKENS v1.0 ─── */
+
+  /* Primary — Crypto Green */
+  --color-green-pale: #E5FFF5;
+  --color-green-bright: #00FFB2;
+  --color-green: #00D395;
+  --color-green-dark: #00A070;
+  --color-green-abyss: #002A1A;
+
+  /* Accent — Bitcoin Orange */
+  --color-gold-light: #FFD78A;
+  --color-gold: #F7931A;
+  --color-gold-dark: #CC7A00;
+
+  /* Functional — Red for negative */
+  --color-red-light: #FF8A8A;
+  --color-red: #FF4444;
+  --color-red-dark: #CC0000;
+
+  /* Neutrals (dark-first) */
+  --color-void: #0A0A0A;
+  --color-deep: #111111;
+  --color-dark: #1A1A2E;
+  --color-border: #2A2A3E;
+  --color-border-light: #3A3A4E;
+  --color-muted: #666680;
+  --color-subtle: #9999AA;
+  --color-light: #CCCCDD;
+  --color-white: #FFFFFF;
+
+  /* Fonts */
+  --font-pixel: 'Press Start 2P', monospace;
+  --font-ui: 'Outfit', sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', ui-monospace, monospace;
+
+  /* Glow signatures */
+  --shadow-glow-green: 0 0 40px rgba(0, 211, 149, 0.8), 0 0 80px rgba(0, 211, 149, 0.4);
+  --shadow-glow-gold: 0 0 20px rgba(247, 147, 26, 0.6);
+
+  /* Border radius — sharp-first */
+  --radius-none: 0px;
+  --radius-badge: 2px;
+  --radius-full: 9999px;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-ui);
+    background-color: var(--color-void);
+    color: var(--color-white);
+    line-height: 1.6;
+  }
+}
